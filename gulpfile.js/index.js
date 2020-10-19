@@ -1,5 +1,5 @@
 const {nunjucks} = require('./nunjucks');
-const {less} = require('./less');
+const {sass} = require('./sass');
 const {series, parallel} = require('gulp');
 const {buildStatic, svgoCleanInline} = require('./static-files');
 const {webpack, webpackProd} = require('./webpack');
@@ -20,7 +20,7 @@ function build(cb){
 
 exports.nunjucks = nunjucks;
 exports.webpack = webpackProd;
-exports.less = less.lessProd;
+exports.sass = sass.sassProd;
 exports.watch = watch;
 exports.clean = require('./clean').clean;
 exports.server = server;
@@ -30,7 +30,7 @@ exports.default = series(dev, series(
     svgoCleanInline,
     parallel(
         nunjucks,
-        less.lessDev,
+        sass.sassDev,
         webpack
     ),
     parallel(
@@ -44,7 +44,7 @@ exports.build = series(build, series(
     svgoCleanInline,
     parallel(
         nunjucks,
-        less.lessProd,
+        sass.sassProd,
         webpack
     )
 ));
